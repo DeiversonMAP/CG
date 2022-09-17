@@ -8,11 +8,14 @@ import {initRenderer,
         onWindowResize,
         createGroundPlaneXZ} from "../libs/util/util.js";
 
-let scene, renderer, camera, material, light, orbit;; // Initial variables
+let scene, renderer, camera, material, light, orbit,material1,material2; // Initial variables
 scene = new THREE.Scene();    // Create main scene
 renderer = initRenderer();    // Init a basic renderer
 camera = initCamera(new THREE.Vector3(0, 15, 30)); // Init camera in this position
 material = setDefaultMaterial(); // create a basic material
+material1 = setDefaultMaterial( 'rgb(6,55,25)');
+material2 = setDefaultMaterial( 'rgb(25,0,63)' );
+
 light = initDefaultBasicLight(scene); // Create a basic light to illuminate the scene
 orbit = new OrbitControls( camera, renderer.domElement ); // Enable mouse rotation, pan, zoom etc.
 
@@ -27,25 +30,26 @@ scene.add( axesHelper );
 let plane = createGroundPlaneXZ(20, 20)
 scene.add(plane);
 
-// create a cube
+// create objects
 let cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-let cubeGeometry2 = new THREE.BoxGeometry(2, 2, 2);
-let cubeGeometry3 = new THREE.BoxGeometry(1, 1, 1);
+let cylinderGeometry = new THREE.CylinderGeometry( 3, 3, 5, 32 );
+let sphereGeometry = new THREE.SphereGeometry( 3, 16, 16 );
+
 let cube = new THREE.Mesh(cubeGeometry, material);
-let cube2 = new THREE.Mesh(cubeGeometry2, material);
-let cube3 = new THREE.Mesh(cubeGeometry3, material);
+let cylinder = new THREE.Mesh(cylinderGeometry, material1);
+let sphere = new THREE.Mesh(sphereGeometry, material2);
 // position the cube
 // coordenates:
 //     x equals orange line
 //     y equals green line
 //     z equals blue line
 cube.position.set(0.0, 2.0, 0.0);
-cube2.position.set(4.0, 1.0, -4.0);
-cube3.position.set(3.0, 0.5, 9.50);
+cylinder.position.set(5.5, 2.5, 0.0);
+sphere.position.set(-5.5, 3.0, 0.0);
 // add the cube to the scene
 scene.add(cube);
-scene.add(cube2);
-scene.add(cube3);
+scene.add(cylinder);
+scene.add(sphere);
 
 // Use this to show information onscreen
 let controls = new InfoBox();
