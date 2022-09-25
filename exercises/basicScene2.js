@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import { OrbitControls } from "../build/jsm/controls/OrbitControls.js";
+import * as THREE from 'three';
+import { OrbitControls } from '../build/jsm/controls/OrbitControls.js';
 import {
   initRenderer,
   initCamera,
@@ -7,54 +7,47 @@ import {
   setDefaultMaterial,
   InfoBox,
   onWindowResize,
-  createGroundPlaneXZ,
+  createGroundPlaneXZ
 } from "../libs/util/util.js";
 
 let scene, renderer, camera, material, light, orbit; // Initial variables
-scene = new THREE.Scene(); // Create main scene
-renderer = initRenderer(); // Init a basic renderer
+scene = new THREE.Scene();    // Create main scene
+renderer = initRenderer();    // Init a basic renderer
 camera = initCamera(new THREE.Vector3(0, 15, 30)); // Init camera in this position
 material = setDefaultMaterial(); // create a basic material
 light = initDefaultBasicLight(scene); // Create a basic light to illuminate the scene
 orbit = new OrbitControls(camera, renderer.domElement); // Enable mouse rotation, pan, zoom etc.
 
 // Listen window size changes
-window.addEventListener(
-  "resize",
-  function () {
-    onWindowResize(camera, renderer);
-  },
-  false
-);
+window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
 // Show axes (parameter is size of each axis)
 let axesHelper = new THREE.AxesHelper(12);
 scene.add(axesHelper);
 
 // create the ground plane
-let plane = createGroundPlaneXZ(20, 20);
+let plane = createGroundPlaneXZ(20, 20)
 scene.add(plane);
 
-// create a cube
-let cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-let cubeGeometry2 = new THREE.BoxGeometry(2, 2, 2);
-let cubeGeometry3 = new THREE.BoxGeometry(1, 1, 1);
-let cube = new THREE.Mesh(cubeGeometry, material);
-let cube2 = new THREE.Mesh(cubeGeometry2, material);
-let cube3 = new THREE.Mesh(cubeGeometry3, material);
-// position the cube
-// coordenates:
-//     x equals orange line
-//     y equals green line
-//     z equals blue line
-cube.position.set(0.0, 2.0, 0.0);
-cube2.position.set(4.0, 1.0, -4.0);
-cube3.position.set(3.0, 0.5, 9.5);
-// add the cube to the scene
-scene.add(cube);
-scene.add(cube2);
-scene.add(cube3);
+// create a spheere
+let spheereGeometry = new THREE.SphereGeometry(0.5);
+// let spheereGeometry = new THREE.BoxGeometry(11, 0.3, 6);
 
+for (let i = 0; i < 12; i++) {
+
+  let spheere = new THREE.Mesh(spheereGeometry, material);
+  spheere.position.set(0, 0.5, 0.0)
+  spheere.rotateY(i * (Math.PI / 6));
+
+  // position the spheere
+  spheere.translateZ(5);
+
+  // add the spheere to the scene
+
+
+  scene.add(spheere);
+
+}
 // Use this to show information onscreen
 let controls = new InfoBox();
 controls.add("Basic Scene");
@@ -68,5 +61,5 @@ controls.show();
 render();
 function render() {
   requestAnimationFrame(render);
-  renderer.render(scene, camera); // Render scene
+  renderer.render(scene, camera) // Render scene
 }

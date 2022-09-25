@@ -46,16 +46,17 @@ camera.position.copy(camPos);
 camera.up.copy(camUp);
 camera.lookAt(camLook);
 
-// let cameraHolder = new THREE.Object3D()
-// cameraHolder.add(camera)
-// scene.add(cameraHolder)
+let cameraHolder = new THREE.Object3D()
+cameraHolder.add(camera)
+scene.add(cameraHolder)
+
 
 render();
 
 function updateCamera() {
   // DICA: Atualize a câmera aqui!
-  camera.position.set(camPos.x, camPos.y, camPos.z);
-  camera.lookAt(camLook.x, camLook.y, camLook.z);
+
+
   message.changeMessage(
     "Pos: {" +
     camPos.x +
@@ -78,29 +79,29 @@ function keyboardUpdate() {
   // DICA: Insira aqui seu código para mover a câmera
   keyboard.update();
   if (keyboard.pressed('up')) {
-    camPos.z -= 0.1;
+    cameraHolder.rotateZ(-0.1);
   } if (keyboard.pressed('down')) {
-    camPos.z += 0.1;
+    cameraHolder.rotateZ(0.1);
   } if (keyboard.pressed('right')) {
-    camPos.x += 0.1;
+    cameraHolder.rotateX(0.1);
   } if (keyboard.pressed('left')) {
-    camPos.x -= 0.1;
+    cameraHolder.rotateX(-0.1);
   } if (keyboard.pressed('pageup')) {
-    camPos.y += 0.1;
+    cameraHolder.rotateY(0.1);
   } if (keyboard.pressed('pagedown')) {
-    camPos.y -= 0.1;
+    cameraHolder.rotateY(-0.1);
   } if (keyboard.pressed('W')) {
-    camLook.z -= 0.1;
+    cameraHolder.translateZ(-0.1);
   } if (keyboard.pressed('S')) {
-    camLook.z += 0.1;
+    cameraHolder.translateZ(+0.1);
   } if (keyboard.pressed('D')) {
-    camLook.x += 0.1;
+    cameraHolder.translateX(0.1);
   } if (keyboard.pressed('A')) {
-    camLook.x -= 0.1;
+    cameraHolder.translateX(-0.1);
   } if (keyboard.pressed('Q')) {
-    camLook.y += 0.1;
+    cameraHolder.translateY(+0.1);
   } if (keyboard.pressed('E')) {
-    camLook.y -= 0.1;
+    cameraHolder.translateY(-0.1);
   }
 
   updateCamera();
